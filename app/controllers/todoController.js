@@ -5,12 +5,13 @@ const createTodo = (req, res) => {
         res.status(400).send({message: "Title cannot be empty"});
         return;
     }
-    const tudo = new Todo({
+    const todo = new Todo({
         title: req.body.title,
         description: req.body.description,
+        userId: req.userId,
         completed: req.body.completed ? req.body.completed : false
     });
-    tudo.save((err, result) => {
+    todo.save((err, result) => {
         if(!err) {
             res.send(result);
         } else {
@@ -55,7 +56,7 @@ const deleteTodoById = (req, res) => {
 };
 
 const deleteAllTodos = (req, res) => {
-    Todo.deleteMany({}, (err, result) => {
+    Todo.deleteMany({ userId: req.userId }, (err, result) => {
         if (!err) {
             if (!result) {
                 res.status(404).send({ message: "Can't delete as no todos present"});
@@ -70,7 +71,11 @@ const deleteAllTodos = (req, res) => {
 
 const findTodo = (req, res) => {
     const title = req.query.title;
-    const condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
+    const userIdcondition = {
+        title: { $regex: new RegExp(title), $options: "i" },
+        userId: req.userId
+    }
+    const condition = title ? { userIdcondition } : { userId: req.userId };
     Todo.find(condition, (err, result) => {
         if (!err) {
             res.send(result);
