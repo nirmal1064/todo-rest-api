@@ -6,7 +6,7 @@
   "author": "Nirmal Kumar",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon --trace-deprecation index.js",
+    "dev": "set NODE_ENV=development&&nodemon --trace-deprecation index.js",
     "test": "jest --coverage --testTimeout=10000 --detectOpenHandles",
     "test:watch": "jest --coverage --watch --testTimeout=10000 --detectOpenHandles"
   },

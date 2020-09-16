@@ -5,7 +5,7 @@ const app = express();
 const todoRouter = require('./app/routes/todoRouter');
 const userRouter = require('./app/routes/userRouter');
 const logger = require('morgan');
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
     require('dotenv').config();
     app.use(logger('dev'));
 }
