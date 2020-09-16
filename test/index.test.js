@@ -152,13 +152,6 @@ describe('Checing findTODO function', () => {
         expect(response.body.message).toBe("No TODO find with id " + id);
         done();
     });
-    it('Fails to find a TODO because id can not be casted', async(done) => {
-        const id = '123456';
-        const response = await request.get(`/todo/${id}`);
-        expect(response.status).toBe(500);
-        expect(response.body.message).toBe(`Cast to ObjectId failed for value "${id}" at path "_id" for model "todo"`);
-        done();
-    });
 });
 
 const dropAllCollections = async () => {

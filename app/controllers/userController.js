@@ -33,15 +33,14 @@ const login = (req, res) => {
         const token = jwt.sign({ id: result.id }, process.env.SECRET_KEY, {
             expiresIn: 86400
         });
-        res.status(200).send({ auth: true, token: "Bearer " + token });
+        res.status(200).send({ auth: true, token: token });
     });
 }
 
 const home = (req, res) => {
-    const token = req.headers['x-access-token'];
-    if (!token) return res.status(401).send({ auth: false, message: 'No token present' });
     User.findById(req.userId, { password: 0 } , (error, result) => {
         if (!error) {
+            console.log(result);
             if (!result) {
                 res.status(404).send({ message: "User not found"});
             } else {
